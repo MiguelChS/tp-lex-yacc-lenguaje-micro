@@ -39,18 +39,14 @@ sentencia: leer
         ;
 
 
-asignar : IDENTIFICADOR ASIGNACION operacion PUNTOYCOMA     { listaVariables($1,$3,listadevariables[10]); }
+asignar : IDENTIFICADOR ASIGNACION operacion PUNTOYCOMA;        { llama a la funcion para agregar la variable }
 
 
-leer: LEER PARA lista PARC PUNTOYCOMA                       { leer(listadevariables[10])}
-        | LEER PARA
+leer: LEER PARA listaleer PARC PUNTOYCOMA
         ;
 
 
-leer: LEER PARA listaleer PARC PUNTOYCOMA;
-
-
-listaleer: IDENTIFICADOR                                    {scanf}
+listaleer: IDENTIFICADOR                                    { hay que crear una funcion con algun scanf por cada variable}
         | IDENTIFICADOR COMA listaleer
         ;
 
@@ -59,9 +55,10 @@ escribir: ESCRIBIR PARA listaescribir PARC PUNTOYCOMA
         ;
 
 
-listaescribir: IDENTIFICADOR                                { $$ = valordevariable($1);}
-            | operacion                                     { el resultado de la operacion}
-            | IDENTIFICADOR COMA listaeescribir
+
+listaescribir: IDENTIFICADOR                                { $$ = valordevariable($1); //funcion que no arme todavia}
+            | operacion                                     { $$ = $1;}
+            | IDENTIFICADOR COMA listaeescribir             { todavia no se como seguir aca xD...}
             | operacion COMA listaescribir
             ;
 
@@ -78,6 +75,8 @@ operacion: NUMERO                                           { $$ = $1;}
 int main (int argc, char *argv []){
 
  yyparse();
+
+
 
 }
 
