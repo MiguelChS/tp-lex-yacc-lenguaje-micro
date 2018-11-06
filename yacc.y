@@ -4,6 +4,7 @@
     #include <string.h>
     #include <stdlib.h>
 
+
 %}
 %union{
     int num;
@@ -34,25 +35,35 @@ lineas: sentencia
 
 sentencia: leer
         | escribir
-        | variable
+        | asignar
         ;
+
+
+asignar : IDENTIFICADOR ASIGNACION operacion PUNTOYCOMA     { listaVariables($1,$3,listadevariables[10]); }
+
 
 leer: LEER PARA lista PARC PUNTOYCOMA                       { leer(listadevariables[10])}
-        | LEER PARA variable
+        | LEER PARA
         ;
 
-escribir: ESCRIBIR PARA lista PARC PUNTOYCOMA               { escribir (listadevariables[10])}
+
+leer: LEER PARA listaleer PARC PUNTOYCOMA;
+
+
+listaleer: IDENTIFICADOR                                    {scanf}
+        | IDENTIFICADOR COMA listaleer
         ;
 
-variable : IDENTIFICADOR                                    { listaVariables($1,0,listadevariables[10]); }
 
-asignar : variable ASIGNACION operacion                     { listaVariables($1,$3,listadevariables[10]); }
-
-lista:  IDENTIFICADOR COMA IDENTIFICADOR
-        | operacion
-        | variable COMA lista
-        | operacion COMA lista
+escribir: ESCRIBIR PARA listaescribir PARC PUNTOYCOMA
         ;
+
+
+listaescribir: IDENTIFICADOR                                { $$ = valordevariable($1);}
+            | operacion                                     { el resultado de la operacion}
+            | IDENTIFICADOR COMA listaeescribir
+            | operacion COMA listaescribir
+            ;
 
 
 operacion: NUMERO                                           { $$ = $1;}
@@ -62,16 +73,12 @@ operacion: NUMERO                                           { $$ = $1;}
         | operacion MENOS operacion                         { $$ = $1 - $2;}
         ;
 
-
-signo: MAS
-        | MENOS
-        ;
-
 %%
 
 int main (int argc, char *argv []){
 
- yylval();
-
+ yyparse();
 
 }
+
+
