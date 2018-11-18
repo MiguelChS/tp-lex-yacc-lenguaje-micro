@@ -8,19 +8,28 @@
 #include "funciones.h"
 
 
+void inicializarLista(id lista[10]){
+
+    for (int i = 0; i <10; ++i) {
+        strcpy(lista[i].nombre,"vacio");
+        lista[i].valor = 0;
+    }
+}
+
+void mostrarLista(id lista[10]){
+
+    printf(".:VARIABLES:.\n");
+
+    for (int i = 0; i <10; ++i) {
+        printf("%s = %d \n",lista[i].nombre, lista[i].valor);
+    }
+
+}
+
 void agregar (char *name, int valor){
 
-    //printf( "agregado %s = %d ",name ,valor);
+    printf( "agregado %s = %d ",name ,valor);
 
 }
 
 
-void cargar( char *name, int valor, id lista[10]){
-
-    printf( "recibio %s = %d ",name ,valor);
-
-    strcmp(lista[0].nombre, name);
-    lista[0].valor = valor;
-
-   // printf( "agregado %s = %d ",lista[0].nombre ,lista[0].valor);
-}

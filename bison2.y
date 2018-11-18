@@ -3,17 +3,9 @@
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
-    //#include "funciones.h"
-
-    typedef struct{
-        char *nombre;
-        int valor;
-    }id;
-
-    void cargar( char *name, int valor, id [10]);
+    #include "funciones.h"
 
     id lista[10];
-
 
 %}
 
@@ -44,7 +36,7 @@ linea: sentencia                        {printf("ok1 \n");}
 
 sentencia : asignacion
 
-asignacion: IDENTIFICADOR ASIGNACION NUMERO PUNTOYCOMA {cargar ($1, $3, &lista[10]);
+asignacion: IDENTIFICADOR ASIGNACION NUMERO PUNTOYCOMA {agregar($1,$3);
 
                                                        }
 
@@ -56,19 +48,11 @@ printf("no se reconoce %s \n", s);
 
 int main (int argc, char *argv []){
 
+    inicializarLista(&lista[10]);
+
+    mostrarLista(&lista[10]);
 
 
     yyparse();
 
-}
-
-
-void cargar( char *name, int valor, id lista[10]){
-
-    printf( "recibio %s = %d ",name ,valor);
-
-    strcmp(lista[0].nombre, name);
-    lista[0].valor = valor;
-
-   // printf( "agregado %s = %d ",lista[0].nombre ,lista[0].valor);
 }

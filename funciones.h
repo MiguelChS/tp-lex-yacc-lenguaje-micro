@@ -6,10 +6,15 @@ typedef struct{
     int valor;
 }id;
 
+
+
 #ifndef UNTITLED_FUNCIONES_H
 #define UNTITLED_FUNCIONES_H
+
+void inicializarLista(id lista[10]);
+void mostrarLista(id lista[10]);
 void agregar (char *name, int valor);
-void cargar( char *name, int valor, id [10]);
+
 
 
 
