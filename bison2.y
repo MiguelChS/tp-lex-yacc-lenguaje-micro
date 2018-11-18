@@ -6,6 +6,7 @@
     #include "funciones.h"
 
     id lista[10];
+    int posicionAgregada = 0;
 
 %}
 
@@ -29,17 +30,14 @@
 
 %%
 
-programa: INICIO linea FIN SALTO        {printf("ok \n"); exit(0);}
+programa: INICIO linea FIN SALTO        {printf("ok \n");mostrarLista(lista); exit(0);}
 
 linea: sentencia                        {printf("ok1 \n");}
     | linea sentencia                   {printf("ok2 \n");}
 
 sentencia : asignacion
 
-asignacion: IDENTIFICADOR ASIGNACION NUMERO PUNTOYCOMA {agregar($1,$3);
-
-                                                       }
-
+asignacion: IDENTIFICADOR ASIGNACION NUMERO PUNTOYCOMA { agregar($1,$3,lista,&posicionAgregada); }
 
 %%
 int yyerror(char *s){
@@ -48,9 +46,9 @@ printf("no se reconoce %s \n", s);
 
 int main (int argc, char *argv []){
 
-    inicializarLista(&lista[10]);
+    inicializarLista(lista);
 
-    mostrarLista(&lista[10]);
+    mostrarLista(lista);
 
 
     yyparse();
