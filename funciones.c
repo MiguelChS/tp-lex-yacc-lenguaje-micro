@@ -28,9 +28,13 @@ void mostrarLista(id lista[10])
     }
 }
 
-void agregar(char *name, int valor, id lista[], int * posicion)
-{   
+void agregar(char *name, int valor, id lista[], int *posicion){
+
+    int pos = *posicion;
+
+    printf("pos: %d", *posicion);
     lista[*posicion].nombre = name;
     lista[*posicion].valor = valor;
-    *posicion++;
+    pos ++;
+    *posicion= pos;
 }

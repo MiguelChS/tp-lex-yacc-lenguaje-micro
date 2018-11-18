@@ -32,12 +32,12 @@
 
 programa: INICIO linea FIN SALTO        {printf("ok \n");mostrarLista(lista); exit(0);}
 
-linea: sentencia                        {printf("ok1 \n");}
-    | linea sentencia                   {printf("ok2 \n");}
+linea: sentencia                        {}
+    | linea sentencia                   {}
 
 sentencia : asignacion
 
-asignacion: IDENTIFICADOR ASIGNACION NUMERO PUNTOYCOMA { agregar($1,$3,lista,&posicionAgregada); }
+asignacion: IDENTIFICADOR ASIGNACION NUMERO PUNTOYCOMA { agregar($1,$3, lista, &posicionAgregada); }
 
 %%
 int yyerror(char *s){
@@ -48,7 +48,7 @@ int main (int argc, char *argv []){
 
     inicializarLista(lista);
 
-    mostrarLista(lista);
+
 
 
     yyparse();
