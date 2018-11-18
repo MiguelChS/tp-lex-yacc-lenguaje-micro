@@ -14,7 +14,7 @@ typedef struct{
 void inicializarLista(id lista[10]);
 void mostrarLista(id lista[10]);
 void agregar (char *name, int valor, id lista[], int *);
-int verificaVariable(char *name,id lista[], int);
+int verificaVariable(char *name,id lista[10], int);
 
 
 

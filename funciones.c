@@ -34,9 +34,9 @@ void agregar(char *name, int valor, id lista[], int *posicion){
 
     int verificacion;
 
-    verificacion = verificaVariable(&name,lista,pos); // aca no se porque no agarra bien el resultado
+    verificacion = verificaVariable(name,lista,pos); // aca no se porque no agarra bien el resultado
 
-    printf("verificacion: %d", verificacion);
+    printf("verificacion: %d\t", verificacion);
 
     if (verificacion == 11){
         printf("Agregada en pos: %d", *posicion);
@@ -56,13 +56,19 @@ void agregar(char *name, int valor, id lista[], int *posicion){
 }
 
 
-int verificaVariable(char *name,id lista[], int pos){
+int verificaVariable(char *name,id lista[10], int pos){
 
 
-    for (int i = 0; i <= pos; ++i)
-    {
-        if(lista[i].nombre == name){
+
+    for (int i = 0; i <= pos; ++i) {
+
+        printf("revisa %s \t", lista[i].nombre);
+
+        if(*lista[i].nombre == *name) {
+
+            printf("retorno = %d ", i);
             return (i); // devuelve la posicion que encontro igual
+
         }else{
             continue;
         }
