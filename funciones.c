@@ -32,9 +32,40 @@ void agregar(char *name, int valor, id lista[], int *posicion){
 
     int pos = *posicion;
 
-    printf("pos: %d", *posicion);
-    lista[*posicion].nombre = name;
-    lista[*posicion].valor = valor;
-    pos ++;
-    *posicion= pos;
+    int verificacion;
+
+    verificacion = verificaVariable(&name,lista,pos); // aca no se porque no agarra bien el resultado
+
+    printf("verificacion: %d", verificacion);
+
+    if (verificacion == 11){
+        printf("Agregada en pos: %d", *posicion);
+        lista[*posicion].nombre = name;
+        lista[*posicion].valor = valor;
+
+        pos ++;
+        *posicion = pos;
+
+    }else{
+        printf("Pisada en pos: %d", verificacion);
+        lista[verificacion].nombre = name;
+        lista[verificacion].valor = valor;
+    }
+
+
+}
+
+
+int verificaVariable(char *name,id lista[], int pos){
+
+
+    for (int i = 0; i <= pos; ++i)
+    {
+        if(lista[i].nombre == name){
+            return (i); // devuelve la posicion que encontro igual
+        }else{
+            continue;
+        }
+    }
+    return 11; // le puse 11 porque esa posicion nunca esta en nuestro vector
 }
