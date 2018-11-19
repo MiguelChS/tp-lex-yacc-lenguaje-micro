@@ -12,11 +12,14 @@ identificador       {letra}({letra}|{digito})*
 %%
 "inicio"                        return (INICIO);
 "fin"                           return (FIN);
+"leer"                          return (LEER);
 
 {numero}                        {
                                     yylval.valor = atoi(yytext);
                                     return (NUMERO);
                                 }
+
+
 
 {identificador}                 {yylval.nombre = strdup(yytext);
 
@@ -25,6 +28,9 @@ identificador       {letra}({letra}|{digito})*
 
 ";"                             return (PUNTOYCOMA);
 ":="                            return (ASIGNACION);
-"."                            return (SALTO);
+"."                             return (PUNTO);
+","                             return (COMA);
+"("                             return (PARA);
+")"                             return (PARC);
 
 %%
