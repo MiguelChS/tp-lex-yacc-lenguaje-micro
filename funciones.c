@@ -77,3 +77,15 @@ void leerVariable (char *name,id lista[10], int * pos){
     agregar(name,valor,lista,pos);
 
 }
+
+
+int retornarValor(char *name, id lista[10]){
+
+    int pos = verificaVariable(name,lista,10);
+
+    int valor = lista[pos].valor;
+
+    printf("\nRetorno %d: ", valor);
+
+    return valor;
+}
