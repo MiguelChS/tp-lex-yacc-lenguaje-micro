@@ -22,7 +22,7 @@
 
 
 %token              INICIO FIN
-%token              LEER
+%token              LEER ESCRIBIR
 %token              PUNTOYCOMA
 %token              COMA
 %token              PUNTO
@@ -36,6 +36,7 @@
 
 %type <valor> operacion
 %type <valor> variable
+%type <valor> listaescribir
 
 %start programa
 
@@ -44,11 +45,12 @@
 
 programa: INICIO linea FIN PUNTO        {printf("ok \n");mostrarLista(lista); exit(0);}
 
-linea: sentencia                        {}
-    | linea sentencia                   {}
+linea: sentencia
+    | linea sentencia
 
 sentencia : asignacion
     | leer
+    | escribir
 
 asignacion: IDENTIFICADOR ASIGNACION NUMERO PUNTOYCOMA { agregar($1,$3, lista, &posicionAgregada); }
     | IDENTIFICADOR ASIGNACION operacion PUNTOYCOMA { agregar($1,$3, lista, &posicionAgregada); }
@@ -58,6 +60,12 @@ leer:LEER PARA listaleer PARC PUNTOYCOMA { cargarVatriable(listaVaribles, lista,
 listaleer: IDENTIFICADOR  { listaVaribles = list_char_push($1,listaVaribles); }
     | IDENTIFICADOR COMA listaleer { listaVaribles = list_char_push($1,listaVaribles); }
 
+escribir: ESCRIBIR PARA listaescribir PARC PUNTOYCOMA
+
+listaescribir: variable     { printf("%d ", $1);}
+    | operacion     { printf("%d ", $1);}
+    | variable COMA listaescribir   { printf("%d ", $1);}
+    | operacion COMA listaescribir  { printf("%d ", $1);}
 
 operacion: variable     {$$ = $1;}
     | NUMERO        {$$ = $1;}
