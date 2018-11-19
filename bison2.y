@@ -45,8 +45,8 @@ asignacion: IDENTIFICADOR ASIGNACION NUMERO PUNTOYCOMA { agregar($1,$3, lista, &
 
 leer:LEER PARA listaleer PARC PUNTOYCOMA
 
-listaleer: IDENTIFICADOR  { leerVariable($1, lista, posicionAgregada); }
-    | IDENTIFICADOR COMA listaleer { leerVariable($1, lista, posicionAgregada); }
+listaleer: IDENTIFICADOR  { leerVariable($1, lista, &posicionAgregada); }
+    | IDENTIFICADOR COMA listaleer { leerVariable($1, lista, &posicionAgregada); }
 
 
 %%

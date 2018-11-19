@@ -69,11 +69,11 @@ int verificaVariable(char *name,id lista[10], int pos){
     return 11; // le puse 11 porque esa posicion nunca esta en nuestro vector
 }
 
-void leerVariable (char *name,id lista[10], int pos){
+void leerVariable (char *name,id lista[10], int * pos){
     int valor = 10;
     printf("Ingrese variable %s: ", name);
     scanf("%d",&valor);
 
-    agregar(name,valor,lista,&pos);
+    agregar(name,valor,lista,pos);
 
 }
