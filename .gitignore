@@ -3,3 +3,4 @@
 /cmake-build-debug
 *.c
 *.h
+a.out

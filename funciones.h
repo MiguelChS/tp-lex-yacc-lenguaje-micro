@@ -23,6 +23,7 @@ void mostrarLista(id lista[10]);
 void agregar (char *name, int valor, id lista[], int *);
 int verificaVariable(char *name,id lista[10], int);
 void leerVariable (char *name,id lista[10], int *);
+int retornarValor(char *name, id lista[10]);
 
 
 

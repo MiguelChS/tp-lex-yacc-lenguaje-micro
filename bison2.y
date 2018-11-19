@@ -28,6 +28,12 @@
 %token <valor>      NUMERO
 %token              ASIGNACION
 %token              PARA PARC
+%token              MAS MENOS
+
+%left MAS MENOS
+
+%type <valor> operacion
+%type <valor> variable
 
 %start programa
 
@@ -43,12 +49,22 @@ sentencia : asignacion
     | leer
 
 asignacion: IDENTIFICADOR ASIGNACION NUMERO PUNTOYCOMA { agregar($1,$3, lista, &posicionAgregada); }
+    | IDENTIFICADOR ASIGNACION operacion PUNTOYCOMA { agregar($1,$3, lista, &posicionAgregada); }
 
 leer:LEER PARA listaleer PARC PUNTOYCOMA { cargarVatriable(listaVaribles, lista, &posicionAgregada); }
 
 listaleer: IDENTIFICADOR  { listaVaribles = list_char_push($1,listaVaribles); }
     | IDENTIFICADOR COMA listaleer { listaVaribles = list_char_push($1,listaVaribles); }
 
+
+operacion: variable     {$$ = $1;}
+    | NUMERO        {$$ = $1;}
+    | variable MAS operacion {$$ = $1 + $3;}
+    | NUMERO MAS operacion  {$$ = $1 + $3;}
+    | variable MENOS operacion  {$$ = $1 - $3;}
+    | NUMERO MENOS operacion    {$$ = $1 - $3;}
+
+variable: IDENTIFICADOR  { $$ = retornarValor($1,lista); }
 
 %%
 int yyerror(char *s){

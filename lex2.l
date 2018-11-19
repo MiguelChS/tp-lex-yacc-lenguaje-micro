@@ -32,5 +32,7 @@ identificador       {letra}({letra}|{digito})*
 ","                             return (COMA);
 "("                             return (PARA);
 ")"                             return (PARC);
+"+"                             return (MAS);
+"-"                             return (MENOS);
 
 %%

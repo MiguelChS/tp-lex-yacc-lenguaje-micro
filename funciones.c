@@ -86,3 +86,15 @@ list_char * list_char_push(char * name, list_char * lista){
     newNodo->sigValor = lista;
     return newNodo;
 }
+
+
+int retornarValor(char *name, id lista[10]){
+
+    int pos = verificaVariable(name,lista,10);
+
+    int valor = lista[pos].valor;
+
+    printf("\nRetorno %d: ", valor);
+
+    return valor;
+}
