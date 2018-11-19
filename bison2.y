@@ -4,6 +4,8 @@
     #include <string.h>
     #include <stdlib.h>
     #include "funciones.h"
+
+    extern FILE *yyin;
     
     id lista[10];
     int posicionAgregada = 0;
@@ -74,6 +76,18 @@ printf("no se reconoce %s \n", s);
 int main (int argc, char *argv []){
 
     inicializarLista(lista);
+
+    if (argc == 2)
+    {
+    	FILE *source = fopen(argv[1], "r");
+    	
+    	if (!source) {
+    		printf("Imposible abrir el archivo %s.\n", argv[1]);
+    		return -1;
+    	}
+    	
+    	yyin = source;
+    }
 
     yyparse();
 

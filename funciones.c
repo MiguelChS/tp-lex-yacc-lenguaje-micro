@@ -73,7 +73,7 @@ void cargarVatriable(list_char * listaVariablesLeer,id lista[], int * pos){
     list_char * aux = listaVariablesLeer;
     int valor = 0;
     while(aux){
-        printf("variable name = %s", aux->valor);
+        printf("variable name = %s \n", aux->valor);
         scanf("%d", &valor);
         agregar(aux->valor,valor,lista,pos);
         aux = aux->sigValor;
