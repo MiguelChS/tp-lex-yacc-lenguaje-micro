@@ -43,7 +43,9 @@
 
 %%
 
-programa: INICIO linea FIN PUNTO        {printf("ok \n");mostrarLista(lista); exit(0);}
+
+
+programa: INICIO linea FIN PUNTO        {printf("FIN \n"); exit(0);}
 
 linea: sentencia
     | linea sentencia
@@ -85,9 +87,25 @@ int main (int argc, char *argv []){
 
     inicializarLista(lista);
 
-    if (argc == 2)
-    {
-    	FILE *source = fopen(argv[1], "r");
+    if (argc == 1){
+
+        FILE *archivo = fopen("codigo.txt","wb");
+        char buffer[200];
+
+        printf("Escribe tu codigo micro!\n");
+
+            while(strcmp(buffer,"analizar") != 0){
+                scanf("%s",&buffer);
+                fprintf(archivo,"%s\n",buffer);
+            }
+            fclose(archivo);
+
+        // aca hay que pasarle al yyparse el archivo que creamos por consola
+        yyin = archivo;
+    }else{
+
+     // aca va la entrada por el archivo que le pasan
+        FILE *source = fopen(argv[1], "r");
     	
     	if (!source) {
     		printf("Imposible abrir el archivo %s.\n", argv[1]);

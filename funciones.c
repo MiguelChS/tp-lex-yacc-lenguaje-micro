@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include "funciones.h"
 
+
+
 void inicializarLista(id lista[]) {
 
     for (int i = 0; i < 10; ++i)
@@ -34,10 +36,10 @@ void agregar(char *name, int valor, id lista[], int *posicion){
 
     verificacion = verificaVariable(name,lista,pos);
 
-    printf("verificacion: %d\t", verificacion);
+    //printf("verificacion: %d\t", verificacion);
 
     if (verificacion == 11){
-        printf("Agregada en pos: %d\n", *posicion);
+        //printf("Agregada en pos: %d\n", *posicion);
         lista[*posicion].nombre = name;
         lista[*posicion].valor = valor;
 
@@ -45,7 +47,7 @@ void agregar(char *name, int valor, id lista[], int *posicion){
         *posicion = pos;
 
     }else{
-        printf("Pisada en pos: %d\n", verificacion);
+        //printf("Pisada en pos: %d\n", verificacion);
         lista[verificacion].nombre = name;
         lista[verificacion].valor = valor;
     }
@@ -55,7 +57,7 @@ int verificaVariable(char *name,id lista[10], int pos){
 
     for (int i = 0; i <= pos; ++i) {
 
-        printf("revisa %s \t", lista[i].nombre);
+        //printf("revisa %s \t", lista[i].nombre);
 
         if(*lista[i].nombre == *name) {
 
@@ -72,7 +74,7 @@ void cargarVatriable(list_char * listaVariablesLeer,id lista[], int * pos){
     list_char * aux = listaVariablesLeer;
     int valor = 0;
     while(aux){
-        printf("variable name = %s \n", aux->valor);
+        printf("Ingrese %s: ", aux->valor);
         scanf("%d", &valor);
         agregar(aux->valor,valor,lista,pos);
         aux = aux->sigValor;
@@ -85,7 +87,6 @@ list_char * list_char_push(char * name, list_char * lista){
     newNodo->sigValor = lista;
     return newNodo;
 }
-
 
 int retornarValor(char *name, id lista[10]){
 
