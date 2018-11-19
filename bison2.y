@@ -4,9 +4,10 @@
     #include <string.h>
     #include <stdlib.h>
     #include "funciones.h"
-
+    
     id lista[10];
     int posicionAgregada = 0;
+    list_char * listaVaribles = NULL;
 
 %}
 
@@ -43,10 +44,10 @@ sentencia : asignacion
 
 asignacion: IDENTIFICADOR ASIGNACION NUMERO PUNTOYCOMA { agregar($1,$3, lista, &posicionAgregada); }
 
-leer:LEER PARA listaleer PARC PUNTOYCOMA
+leer:LEER PARA listaleer PARC PUNTOYCOMA { cargarVatriable(listaVaribles, lista, &posicionAgregada); }
 
-listaleer: IDENTIFICADOR  { leerVariable($1, lista, &posicionAgregada); }
-    | IDENTIFICADOR COMA listaleer { leerVariable($1, lista, &posicionAgregada); }
+listaleer: IDENTIFICADOR  { listaVaribles = list_char_push($1,listaVaribles); }
+    | IDENTIFICADOR COMA listaleer { listaVaribles = list_char_push($1,listaVaribles); }
 
 
 %%

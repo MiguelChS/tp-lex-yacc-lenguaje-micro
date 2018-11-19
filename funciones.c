@@ -69,11 +69,20 @@ int verificaVariable(char *name,id lista[10], int pos){
     return 11; // le puse 11 porque esa posicion nunca esta en nuestro vector
 }
 
-void leerVariable (char *name,id lista[10], int * pos){
-    int valor = 10;
-    printf("Ingrese variable %s: ", name);
-    scanf("%d",&valor);
+void cargarVatriable(list_char * listaVariablesLeer,id lista[], int * pos){
+    list_char * aux = listaVariablesLeer;
+    int valor = 0;
+    while(aux){
+        printf("variable name = %s", aux->valor);
+        scanf("%d", &valor);
+        agregar(aux->valor,valor,lista,pos);
+        aux = aux->sigValor;
+    }
+}
 
-    agregar(name,valor,lista,pos);
-
+list_char * list_char_push(char * name, list_char * lista){
+    list_char * newNodo = malloc(sizeof(list_char));
+    newNodo->valor = name;
+    newNodo->sigValor = lista;
+    return newNodo;
 }
