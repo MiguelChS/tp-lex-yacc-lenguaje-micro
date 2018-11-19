@@ -59,7 +59,6 @@ int verificaVariable(char *name,id lista[10], int pos){
 
         if(*lista[i].nombre == *name) {
 
-            printf("retorno = %d ", i);
             return (i);
 
         }else{
@@ -93,8 +92,6 @@ int retornarValor(char *name, id lista[10]){
     int pos = verificaVariable(name,lista,10);
 
     int valor = lista[pos].valor;
-
-    printf("\nRetorno %d: ", valor);
 
     return valor;
 }

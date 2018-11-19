@@ -13,6 +13,7 @@ identificador       {letra}({letra}|{digito})*
 "inicio"                        return (INICIO);
 "fin"                           return (FIN);
 "leer"                          return (LEER);
+"escribir"                      return (ESCRIBIR);
 
 {numero}                        {
                                     yylval.valor = atoi(yytext);
