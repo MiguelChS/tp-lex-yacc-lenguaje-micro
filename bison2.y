@@ -3,6 +3,7 @@
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
+    #include <unistd.h>
     #include "funciones.h"
 
     extern FILE *yyin;
@@ -88,30 +89,28 @@ int main (int argc, char *argv []){
     inicializarLista(lista);
 
     if (argc == 1){
-
-        FILE *archivo = fopen("codigo.txt","wb");
+        FILE *archivo = fopen("codigo.txt","w+");
         char buffer[200];
-
         printf("Escribe tu codigo micro!\n");
-
-            while(strcmp(buffer,"analizar") != 0){
-                scanf("%s",&buffer);
-                fprintf(archivo,"%s\n",buffer);
-            }
-            fclose(archivo);
-
-        // aca hay que pasarle al yyparse el archivo que creamos por consola
-        yyin = archivo;
+        scanf("%s",&buffer);
+        while(strcmp(buffer,"analizar") != 0){
+            fprintf(archivo,"%s\n",buffer);
+            scanf("%s",&buffer);
+        }
+        fclose(archivo);
+        archivo = fopen("./codigo.txt", "r");
+    	if (!archivo) {
+    		printf("Imposible abrir el archivo codigo.txt.\n");
+    		return -1;
+    	}
+    	yyin = archivo;
     }else{
-
-     // aca va la entrada por el archivo que le pasan
+        printf("leer Archivo \n");
         FILE *source = fopen(argv[1], "r");
-    	
     	if (!source) {
     		printf("Imposible abrir el archivo %s.\n", argv[1]);
     		return -1;
     	}
-    	
     	yyin = source;
     }
 
