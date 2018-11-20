@@ -11,6 +11,7 @@
     id lista[10];
     int posicionAgregada = 0;
     list_char * listaVaribles = NULL;
+    list_char * listResult = NULL;
 
 %}
 
@@ -58,17 +59,17 @@ sentencia : asignacion
 asignacion: IDENTIFICADOR ASIGNACION NUMERO PUNTOYCOMA { agregar($1,$3, lista, &posicionAgregada); }
     | IDENTIFICADOR ASIGNACION operacion PUNTOYCOMA { agregar($1,$3, lista, &posicionAgregada); }
 
-leer:LEER PARA listaleer PARC PUNTOYCOMA { cargarVatriable(listaVaribles, lista, &posicionAgregada); }
+leer:LEER PARA listaleer PARC PUNTOYCOMA { cargarVatriable(listaVaribles, lista, &posicionAgregada); listaVaribles = NULL; }
 
 listaleer: IDENTIFICADOR  { listaVaribles = list_char_push($1,listaVaribles); }
     | IDENTIFICADOR COMA listaleer { listaVaribles = list_char_push($1,listaVaribles); }
 
-escribir: ESCRIBIR PARA listaescribir PARC PUNTOYCOMA
+escribir: ESCRIBIR PARA listaescribir PARC PUNTOYCOMA { showListResult(listResult); listResult = NULL; }
 
-listaescribir: variable     { printf("%d ", $1);}
-    | operacion     { printf("%d ", $1);}
-    | variable COMA listaescribir   { printf("%d ", $1);}
-    | operacion COMA listaescribir  { printf("%d ", $1);}
+listaescribir: variable     { listResult = list_int_push($1,listResult);}
+    | operacion     { listResult = list_int_push($1,listResult);}
+    | variable COMA listaescribir   { listResult = list_int_push($1,listResult);}
+    | operacion COMA listaescribir  { listResult = list_int_push($1,listResult);}
 
 operacion: variable     {$$ = $1;}
     | NUMERO        {$$ = $1;}

@@ -55,16 +55,10 @@ void agregar(char *name, int valor, id lista[], int *posicion){
 
 int verificaVariable(char *name,id lista[10], int pos){
 
-    for (int i = 0; i <= pos; ++i) {
+    for (int i = 0; i < pos; ++i) {
 
-        //printf("revisa %s \t", lista[i].nombre);
-
-        if(*lista[i].nombre == *name) {
-
+        if(strcmp(lista[i].nombre , name) == 0) {
             return (i);
-
-        }else{
-            continue;
         }
     }
     return 11; // le puse 11 porque esa posicion nunca esta en nuestro vector
@@ -88,9 +82,29 @@ list_char * list_char_push(char * name, list_char * lista){
     return newNodo;
 }
 
+list_int * list_int_push(int valor, list_int * lista) {
+    list_int * newNodo = malloc(sizeof(list_int));
+    newNodo->valor = valor;
+    newNodo->sigValor = lista;
+    return newNodo;
+}
+
+void showListResult(list_int * lista){
+    list_int * aux = lista;
+    while(aux){
+        printf("%d\n", aux->valor);
+        aux = aux->sigValor;
+    }
+}
+
 int retornarValor(char *name, id lista[10]){
 
     int pos = verificaVariable(name,lista,10);
+
+    if(pos == 11){
+        printf("Error Variable no definida (%s)\n",name);
+        exit(0);
+    }
 
     int valor = lista[pos].valor;
 
