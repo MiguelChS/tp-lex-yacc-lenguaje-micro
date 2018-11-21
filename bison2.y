@@ -35,10 +35,12 @@
 %token              MAS MENOS
 
 %left MAS MENOS
+%left NEGADO
 
-%type <valor> operacion
-%type <valor> variable
+
 %type <valor> listaescribir
+%type <valor> variable
+%type <valor> operacion
 
 %start programa
 
@@ -47,7 +49,7 @@
 
 
 
-programa: INICIO linea FIN PUNTO        {printf("FIN \n"); exit(0);}
+programa: INICIO linea FIN        {printf("FIN DE EJECUCION \n"); exit(0);}
 
 linea: sentencia
     | linea sentencia
@@ -56,27 +58,35 @@ sentencia : asignacion
     | leer
     | escribir
 
-asignacion: IDENTIFICADOR ASIGNACION NUMERO PUNTOYCOMA { agregar($1,$3, lista, &posicionAgregada); }
-    | IDENTIFICADOR ASIGNACION operacion PUNTOYCOMA { agregar($1,$3, lista, &posicionAgregada); }
+asignacion: IDENTIFICADOR ASIGNACION NUMERO PUNTOYCOMA      { agregar($1,$3, lista, &posicionAgregada); }
+    | IDENTIFICADOR ASIGNACION operacion PUNTOYCOMA         { agregar($1,$3, lista, &posicionAgregada); }
 
-leer:LEER PARA listaleer PARC PUNTOYCOMA { cargarVatriable(listaVaribles, lista, &posicionAgregada); listaVaribles = NULL; }
 
-listaleer: IDENTIFICADOR  { listaVaribles = list_char_push($1,listaVaribles); }
-    | IDENTIFICADOR COMA listaleer { listaVaribles = list_char_push($1,listaVaribles); }
 
-escribir: ESCRIBIR PARA listaescribir PARC PUNTOYCOMA { showListResult(listResult); listResult = NULL; }
+leer:LEER PARA listaleer PARC PUNTOYCOMA    { cargarVatriable(listaVaribles, lista, &posicionAgregada);
+                                              listaVaribles = NULL; }
 
-listaescribir: variable     { listResult = list_int_push($1,listResult);}
-    | operacion     { listResult = list_int_push($1,listResult);}
-    | variable COMA listaescribir   { listResult = list_int_push($1,listResult);}
-    | operacion COMA listaescribir  { listResult = list_int_push($1,listResult);}
+listaleer: IDENTIFICADOR                    { listaVaribles = list_char_push($1,listaVaribles); }
+    | IDENTIFICADOR COMA listaleer          { listaVaribles = list_char_push($1,listaVaribles); }
 
-operacion: variable     {$$ = $1;}
-    | NUMERO        {$$ = $1;}
-    | variable MAS operacion {$$ = $1 + $3;}
-    | NUMERO MAS operacion  {$$ = $1 + $3;}
-    | variable MENOS operacion  {$$ = $1 - $3;}
-    | NUMERO MENOS operacion    {$$ = $1 - $3;}
+
+
+escribir: ESCRIBIR PARA listaescribir PARC PUNTOYCOMA   { showListResult(listResult); listResult = NULL; }
+
+listaescribir: variable                                 { listResult = list_int_push($1,listResult);}
+    | operacion                                         { listResult = list_int_push($1,listResult);}
+    | variable COMA listaescribir                       { listResult = list_int_push($1,listResult);}
+    | operacion COMA listaescribir                      { listResult = list_int_push($1,listResult);}
+
+
+
+operacion: variable                 {$$ = $1;}
+    | NUMERO                        {$$ = $1;}
+    | operacion MAS operacion       {$$ = $1 + $3;}
+    | operacion MENOS operacion     {$$ = $1 - $3;}
+    | MENOS operacion %prec NEGADO  {$$ = -$2;}
+    | PARA operacion PARC           {$$ = $2;}
+
 
 variable: IDENTIFICADOR  { $$ = retornarValor($1,lista); }
 
@@ -94,7 +104,7 @@ int main (int argc, char *argv []){
         char buffer[200];
         printf("Escribe tu codigo micro!\n");
         scanf("%s",&buffer);
-        while(strcmp(buffer,"analizar") != 0){
+        while(strcmp(buffer,"compilar") != 0){
             fprintf(archivo,"%s\n",buffer);
             scanf("%s",&buffer);
         }
